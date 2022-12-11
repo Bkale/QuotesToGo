@@ -1,0 +1,53 @@
+{
+    "carrier": "hartford",
+    "questions": [
+        {
+            "id": "hartford-q0",
+            "displayText": "Business Name",
+            "mappedCurationQuestion": "4bb0fd64-f81a-4a18-8f45-3f48a8cca6b8",
+            "required": true
+        },
+        {
+            "id": "hartford-q1",
+            "displayText": "NAICS Code",
+            "mappedCurationQuestion": "c74bd32a-37cf-47f2-a834-1ab5b5fe9585",
+            "required": true
+        },
+        {
+            "id": "hartford-q2",
+            "displayText": "No. Full Time Employees",
+            "mappedCurationQuestion": "fc84dce3-758c-42e9-995c-79a1f8456314",
+            "required": false
+        },
+        {
+            "id": "hartford-q3",
+            "displayText": "Annual Sales",
+            "mappedCurationQuestion": "a4563306-599a-4e08-8440-2aaed58c3c62",
+            "required": true
+        },
+        {
+            "id": "hartford-q4",
+            "displayText": "Liquor Liability Coverage?",
+            "mappedCurationQuestion": "38c6595d-c63d-44df-a7a7-613cf35bb8da",
+            "required": true
+        },
+        {
+            "id": "hartford-q5",
+            "displayText": "Are all employees serving alcohol properly trained?",
+            "mappedCurationQuestion": "767c533a-f8f2-4561-be40-3cf8bdd095d3",
+            "required": {
+                "if": "hartford-q4",
+                "eq": true
+            }
+        },
+        {
+            "id": "hartford-q6",
+            "displayText": "BYOB Liquor Liability Only",
+            "mappedCurationQuestion": "abb7a752-87bc-492a-8153-957556aebedc",
+            "required": {
+                "if": "hartford-q4",
+                "eq": true
+            }
+        }
+    ]
+}

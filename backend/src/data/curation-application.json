@@ -1,0 +1,144 @@
+[
+    {
+        "id": "652a9789-bb5f-41a9-8453-0ae6308bc810",
+        "type": "Section",
+        "title": "Eligibility",
+        "children": [
+            {
+                "id": "2c9e2b9f-2ef9-4195-98ca-14e1d75600fc",
+                "type": "Section",
+                "title": "Business Classification",
+                "children": [
+                    {
+                        "id": "c74bd32a-37cf-47f2-a834-1ab5b5fe9585",
+                        "type": "Question",
+                        "displayText": "Business Classification (NAICS)",
+                        "componentType": "text"
+                    }
+                ]
+            },
+            {
+                "id": "1ce3da20-8dc5-460d-b1bd-cebc49528c9a",
+                "type": "Section",
+                "title": "Business Details",
+                "children": [
+                    {
+                        "id": "4bb0fd64-f81a-4a18-8f45-3f48a8cca6b8",
+                        "type": "Question",
+                        "displayText": "Business Name",
+                        "componentType": "text",
+                        "options": [],
+                        "conditions": []
+                    },
+                    {
+                        "id": "5a078ad1-1b04-46af-8b2a-95dbd638d578",
+                        "type": "Question",
+                        "displayText": "Legal Entity Type",
+                        "componentType": "select",
+                        "options": [
+                            "Association",
+                            "Labor Union",
+                            "Religious Organization",
+                            "Corporation",
+                            "C - Corporation",
+                            "S - Corporation",
+                            "Government Entity",
+                            "Individual/Sole Proprietor",
+                            "Joint Venture",
+                            "Limited Liability Company (LLC)",
+                            "Limited Liability Partnership (LLP)",
+                            "Partnership",
+                            "Trust or Estate",
+                            "Trustee"
+                        ],
+                        "conditions": []
+                    },
+                    {
+                        "type": "Question",
+                        "id": "fc84dce3-758c-42e9-995c-79a1f8456314",
+                        "displayText": "Number of Full Time Employees",
+                        "componentType": "text",
+                        "conditions": []
+                    },
+                    {
+                        "id": "46445f52-a995-4a3f-b8f7-8260cdb2057e",
+                        "type": "Question",
+                        "displayText": "Business Start Date",
+                        "componentType": "text",
+                        "conditions": []
+                    },
+                    {
+                        "id": "a4563306-599a-4e08-8440-2aaed58c3c62",
+                        "type": "Question",
+                        "displayText": "Annual Sales",
+                        "componentType": "text",
+                        "options": [],
+                        "conditions": []
+                    }
+                ]
+            }
+          ]
+          },
+            {
+                "id": "c3812f6c-408a-45c4-bae2-2e06a42eca40",
+                "type": "Section",
+                "title": "Coverages",
+                "children": [
+                    {
+                        "id": "532f1964-9fa0-4fa1-bba9-8aa332192fd8",
+                        "type": "Question",
+                        "displayText": "Add Unmanned Aircraft Liability Coverage?",
+                        "componentType": "radioBoolean",
+                        "defaultValue": "false",
+                        "children": [
+                            {
+                                "id": "4b71296d-4230-4d0f-8140-a345e22d8694",
+                                "text": "Number of Unmanned Aircraft",
+                                "archived": false,
+                                "componentType": "number",
+                                "options": [],
+                                "conditions": [
+                                    {
+                                        "subjectId": "532f1964-9fa0-4fa1-bba9-8aa332192fd8",
+                                        "displayIfEquals": true
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "38c6595d-c63d-44df-a7a7-613cf35bb8da",
+                        "type": "Question",
+                        "displayText": "Liquor Liability",
+                        "componentType": "radioBoolean",
+                        "options": [],
+                        "conditions": [],
+                        "children": [
+                            {
+                                "id": "258999f6-61a5-4241-8084-e2a102d8056d",
+                                "type": "Section",
+                                "conditions": [
+                                    {
+                                        "subjectId": "38c6595d-c63d-44df-a7a7-613cf35bb8da",
+                                        "displayIfEquals": true
+                                    }
+                                ],
+                                "children": [
+                                    {
+                                        "id": "767c533a-f8f2-4561-be40-3cf8bdd095d3",
+                                        "type": "Question",
+                                        "displayText": "Are all employees serving alcohol properly trained?",
+                                        "componentType": "radioBoolean"
+                                    },
+                                    {
+                                        "id": "abb7a752-87bc-492a-8153-957556aebedc",
+                                        "displayText": "BYOB Liquor Liability Only?",
+                                        "componentType": "radioBoolean"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+]

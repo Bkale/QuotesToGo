@@ -1,0 +1,50 @@
+{
+    "carrier": "chubb",
+    "questions": [
+        {
+            "id": "chubb-q0",
+            "displayText": "Business Name",
+            "mappedCurationQuestion": "4bb0fd64-f81a-4a18-8f45-3f48a8cca6b8",
+            "required": true
+        },
+        {
+            "id": "chubb-q1",
+            "displayText": "Legal Entity Type",
+            "mappedCurationQuestion": "5a078ad1-1b04-46af-8b2a-95dbd638d578",
+            "required": true
+        },
+        {
+            "id": "chubb-q2",
+            "displayText": "Date Founded",
+            "mappedCurationQuestion": "46445f52-a995-4a3f-b8f7-8260cdb2057e",
+            "required": false
+        },
+        {
+            "id": "chubb-q3",
+            "displayText": "Gross Sales",
+            "mappedCurationQuestion": "a4563306-599a-4e08-8440-2aaed58c3c62",
+            "required": false
+        },
+        {
+            "id": "chubb-q4",
+            "displayText": "NAICS Code",
+            "mappedCurationQuestion": "c74bd32a-37cf-47f2-a834-1ab5b5fe9585",
+            "required": true
+        },
+        {
+            "id": "chubb-q5",
+            "displayText": "Add Unmanned Aircraft Liability Coverage?",
+            "mappedCurationQuestion": "532f1964-9fa0-4fa1-bba9-8aa332192fd8",
+            "required": false
+        },
+        {
+            "id": "chubb-q6",
+            "displayText": "Number of Unmanned Aircraft",
+            "mappedCurationQuestion": "4b71296d-4230-4d0f-8140-a345e22d8694",
+            "required": {
+                "if": "chubb-q5",
+                "eq": true
+            }
+        }
+    ]
+}
