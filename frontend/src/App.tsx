@@ -6,21 +6,24 @@ import React from 'react';
 import axios from 'axios';
 import { createTheme } from './theme';
 
-//REDUX
-import { useAppSelector } from './redux/reduxHooks';
-import { RootState } from './redux/store';
+//Redux
+import { RootState } from './redux/rootReducer';
+import { useAppSelector, useAppDispatch } from './redux/reduxHooks';
+import {setApplications} from './redux/applications/applications.action';
 
 export default function App() {
+    const dispatch = useAppDispatch()
     const {selectedAppId} = useAppSelector((state: RootState) => state.applications);
-
-    const [applications, setApplications] = React.useState<Application[]>([]);
-    const selectedApp = applications.find((app) => app.id === selectedAppId);
 
     React.useEffect(() => {
         axios
             .get('/api/applications/all')
-            .then(({ data }) => setApplications(data));
+            .then(({ data }) => {
+                setApplications(data, dispatch)
+                // TODO clear application data from persist if !Auth | no data from backend
+            });
     }, []);
+
 
     return (
         <ThemeProvider theme={createTheme()}>

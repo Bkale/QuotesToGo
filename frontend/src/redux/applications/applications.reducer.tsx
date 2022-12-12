@@ -11,6 +11,11 @@ const INITIAL_STATE = {
 }
  const applicationReducer = (state: ApplicationsState = INITIAL_STATE, action: { type: string; payload: any; }) => {
   switch (action.type) {
+    case "SET_APPLICATIONS":
+      return {
+        ...state,
+        applications: action.payload
+      }
     case "ADD_APPLICATION":
       return {
         ...state,

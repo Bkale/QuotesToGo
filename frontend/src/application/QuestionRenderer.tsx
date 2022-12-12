@@ -1,6 +1,6 @@
 import { MutableRefObject } from 'react';
 import { BoxProps, Box } from '@mui/material';
-import { ApplicationQuestion } from '../../../shared-types';
+import { ApplicationNode, ApplicationQuestion, ApplicationSection } from '../../../shared-types';
 import { RadioBooleanField } from './RadioBooleanField';
 import { SectionRenderer } from './SectionRenderer';
 import { SelectField } from './SelectField';
@@ -10,7 +10,7 @@ import { useAppSelector } from "src/redux/reduxHooks";
 import {RootState} from 'src/redux/store';
 
 interface Props {
-    question: ApplicationQuestion;
+    question: ApplicationNode;
     depth: number;
     onChange: (event: { target: { value: any; }; }, questionId: string) => void;
     answers: {[key: string]: string}
@@ -29,7 +29,7 @@ export const QuestionRenderer: React.VFC<Props> = (props) => {
         ) : (question as ApplicationQuestion).componentType === 'radioBoolean' ? (
             <RadioBooleanField question={(question as ApplicationQuestion)} onChange={props.onChange}/>
         ) : (
-            <SelectField question={question} onChange={props.onChange}/>
+            <SelectField question={(question as ApplicationQuestion)} onChange={props.onChange}/>
         )
     ) : (
         (question as ApplicationQuestion).componentType === 'text' ? (
@@ -37,35 +37,50 @@ export const QuestionRenderer: React.VFC<Props> = (props) => {
         ) : (question as ApplicationQuestion).componentType === 'radioBoolean' ? (
             <RadioBooleanField question={(question as ApplicationQuestion)} reference={props.reference}/>
         ) : (
-            <SelectField question={question} reference={props.reference}/>
+            <SelectField question={(question as ApplicationQuestion)} reference={props.reference}/>
         )
     );
 
-
+    const getValue = (value: string) => {
+        if(value){
+            return value.toLowerCase() === "true" ? true
+            : value.toLowerCase() === "false" ? false
+            : value;    
+        }
+        return <></>;
+    }
     return (
         <Box style={{ ...questionProps, marginLeft: `${props.depth * 40}px` }}>
             {FieldComponent}
-            {props.question.children?.map((child) => {
-                if (child.type === 'Section') {
-                    return (
-                        <SectionRenderer
-                            section={child}
-                            depth={props.depth + 1}
-                            onChange={props.onChange}
-                            answers={props.answers}
-                            reference={props.reference}
-                        />
-                    );
+            {props.question.children?.map((child: ApplicationNode, i: any) => {
+                if(child.conditions){
+                    if (child.type === 'Section') {
+                            if(getValue(props.answers[child.conditions[0].subjectId]) === child.conditions[0].displayIfEquals){
+                                return (
+                                    <SectionRenderer
+                                        section={child}
+                                        depth={props.depth + 1}
+                                        reference={props.reference}
+                                        onChange={props.onChange}
+                                        answers={props.answers}
+                                    />
+                                );
+                            }
+                    } 
+    
+                    if(getValue(props.answers[child.conditions[0].subjectId]) === child.conditions[0].displayIfEquals){
+                        return (
+                            <QuestionRenderer
+                                question={child}
+                                depth={props.depth + 1}
+                                reference={props.reference}
+                                onChange={props.onChange}
+                                answers={props.answers}
+                            />
+                        );
+                    }
                 }
-                return (
-                    <QuestionRenderer
-                        question={child}
-                        depth={props.depth + 1}
-                        onChange={props.onChange}
-                        answers={props.answers}
-                        reference={props.reference}
-                    />
-                );
+                return <></>;
             })}
         </Box>
     );

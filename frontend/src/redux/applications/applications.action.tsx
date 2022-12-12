@@ -12,6 +12,14 @@ export const addApplication = (applicationData: Application[], dispatch: Dispatc
   }
 }
 
+export const setApplications = (applicationData: Application[], dispatch: Dispatch) => {
+  try {
+    dispatch({type: 'SET_APPLICATIONS', payload: applicationData})
+  } catch (error) {
+    // Do something
+  }
+}
+
 export const updateSelectedApp = (selectedAppId: string, dispatch: Dispatch) => {
   try {
     dispatch({type: 'UPDATE_SELECTED_APP', payload: selectedAppId})
