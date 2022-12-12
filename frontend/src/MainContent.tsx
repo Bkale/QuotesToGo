@@ -29,7 +29,7 @@ export const MainContent = () => {
             }
         })
     };
-    
+
     const handleSubmit = () => {
         const {answerLookup} = selectedApp;
         
@@ -39,18 +39,11 @@ export const MainContent = () => {
             if(answerLookup[answer].isRequired && (answers[answer] === undefined )) return; // VALIDATE ISREQUIRED
             answerLookup[answer].value = answers[answer];
            } else {
-            if(mainRef.current[answer] === undefined || mainRef.current[answer].value.length === 0) return; // VALIDATE ISREQUIRED
+            if(mainRef.current[answer] === null || mainRef.current[answer].value === undefined) return; 
+            if(mainRef.current[answer].value.length === 0) return; // VALIDATE ISREQUIRED
             answerLookup[answer].value = mainRef.current[answer].value;
            }
-
         }
-        
-        axios
-        .post('/api/applications/save', selectedApp)
-        .then(({ data }) => {
-            console.log(data)
-        })
-        // .finally(handleClose);
         
     }
 
@@ -71,7 +64,6 @@ export const MainContent = () => {
                 Quotes You Can Take With You
             </Typography>
             <Box>{rootSections}</Box>
-            <button onClick={handleSubmit}>Save</button>
             <button onClick={handleSubmit}>Submit</button>
         </Box>
     );
