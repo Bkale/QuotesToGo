@@ -48,18 +48,19 @@ applicationRouter.post(
 );
 
 applicationRouter.post(
-    '/save',
+    '/submit',
     async (
         req: Request<Application>,
-        res: Response<Application>
+        res: Response<Application[]>
     ) => {
         try {
             const args = req.body;
             console.log(args);
             
             // console.log("ARGS: ",args)
-            const savedApplication = datastore.save(args);
-            res.status(200).send(savedApplication);
+            datastore.submit(args);
+            const allApplications = datastore.getAll();
+            res.status(200).send(allApplications);
         } catch (e: any) {
             res.status(500).send(e.message);
         }

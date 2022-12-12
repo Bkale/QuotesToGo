@@ -43,6 +43,8 @@ export interface ApplicationQuestion {
 
     displayText: string;
 
+    text?: string;
+
     componentType?: ApplicationComponentType;
 
     options?: string[];

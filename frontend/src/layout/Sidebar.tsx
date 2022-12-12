@@ -1,14 +1,14 @@
 import { BoxProps, Button, Box } from '@mui/material';
 import React from 'react';
-import { Application } from '../../shared-types';
+import { Application } from '../../../shared-types/index';
 import axios from 'axios';
-import { CarriersModal } from './CarriersModal';
+import { CarriersModal } from 'src/containers/CarriersModal';
 
 // Redux
-import { useAppSelector } from './redux/reduxHooks';
-import { RootState } from './redux/store';
+import { useAppSelector } from 'src/redux/reduxHooks';
+import { RootState } from 'src/redux/store';
 import { useAppDispatch } from "src/redux/reduxHooks";
-import {addApplication, updateSelectedApp} from './redux/applications/applications.action';
+import {addApplication, updateSelectedApp} from 'src/redux/applications/applications.action';
 
 interface Props {
     style?: BoxProps['style'];
