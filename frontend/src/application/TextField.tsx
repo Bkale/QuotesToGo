@@ -16,6 +16,7 @@ export const TextField: React.VFC<Props> = ({ question, onChange, reference }) =
                 label={(question as ApplicationQuestion).displayText}
                 variant="standard"
                 style={textStyles}
+                required={(question as ApplicationQuestion).required}
                 onChange={(e) => onChange(e,question.id)}
             />
         );
@@ -27,6 +28,7 @@ export const TextField: React.VFC<Props> = ({ question, onChange, reference }) =
                 label={(question as ApplicationQuestion).displayText}
                 variant="standard"
                 style={textStyles}
+                required={(question as ApplicationQuestion).required}
                 inputRef={ele => (reference.current[question.id] = ele)}
             />
         );

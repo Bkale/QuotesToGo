@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import axios from 'axios';
 import { Box, BoxProps, Typography } from '@mui/material';
 import { ApplicationSection } from '../../shared-types';
 import { SectionRenderer } from './application/SectionRenderer';
@@ -12,10 +13,14 @@ export const MainContent = () => {
     const [answers, setAnswers] = useState<{[key: string]: string}>({});
     const mainRef = useRef([]);
 
-    // TODO: CONVERT ALL INPUT FIELDS EXEPT CONDITIONALS TO USEREF
     const handleChange = (event: { target: {
         [x: string]: any; value: any; 
 }; }, questionId: string) => {
+        if (event.target.value && typeof(event.target.value) === "string") {
+            console.log(event.target.value)
+            if (event.target.value.toLowerCase() === "true") event.target.value = true;
+            if (event.target.value.toLowerCase() === "false")  event.target.value = false;
+        }
         
         setAnswers(prev => {
             return {
@@ -24,10 +29,28 @@ export const MainContent = () => {
             }
         })
     };
-    console.log(answers);
     
     const handleSubmit = () => {
-        console.log(mainRef);
+        const {answerLookup} = selectedApp;
+        
+        for(let answer in answerLookup){
+           // Populate answerlookup
+           if(answer in answers) {
+            if(answerLookup[answer].isRequired && (answers[answer] === undefined )) return; // VALIDATE ISREQUIRED
+            answerLookup[answer].value = answers[answer];
+           } else {
+            if(mainRef.current[answer] === undefined || mainRef.current[answer].value.length === 0) return; // VALIDATE ISREQUIRED
+            answerLookup[answer].value = mainRef.current[answer].value;
+           }
+
+        }
+        
+        axios
+        .post('/api/applications/save', selectedApp)
+        .then(({ data }) => {
+            console.log(data)
+        })
+        // .finally(handleClose);
         
     }
 

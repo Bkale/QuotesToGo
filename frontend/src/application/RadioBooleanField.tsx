@@ -34,9 +34,8 @@ export const RadioBooleanField: React.VFC<Props> = ({question, onChange, referen
                         <FormControlLabel
                             key={option.label}
                             value={option.value}
-                            control={<Radio />}
+                            control={<Radio required={(question as ApplicationQuestion).required}/>}
                             label={option.label}
-                            
                         />
                     ))}
                     <FormControlLabel
@@ -58,7 +57,7 @@ export const RadioBooleanField: React.VFC<Props> = ({question, onChange, referen
                         <FormControlLabel
                             key={option.label}
                             value={option.value}
-                            control={<Radio />}
+                            control={<Radio required={(question as ApplicationQuestion).required}/>}
                             label={option.label}
                             
                         />
