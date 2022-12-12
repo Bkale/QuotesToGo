@@ -1,3 +1,4 @@
+import { MutableRefObject } from 'react';
 import { Box, BoxProps, Typography } from '@mui/material';
 import { ApplicationSection } from '../../../shared-types';
 import { QuestionRenderer } from './QuestionRenderer';
@@ -5,6 +6,9 @@ import { QuestionRenderer } from './QuestionRenderer';
 interface Props {
     section: ApplicationSection;
     depth: number;
+    onChange: (event: { target: { value: any; }; }, questionId: string) => void;
+    answers: {[key: string]: string}
+    reference?: MutableRefObject<[]> 
 }
 
 export const SectionRenderer: React.VFC<Props> = (props) => {
@@ -21,6 +25,9 @@ export const SectionRenderer: React.VFC<Props> = (props) => {
                         <SectionRenderer
                             section={child}
                             depth={props.depth + 1}
+                            onChange={props.onChange}
+                            answers={props.answers}
+                            reference={props.reference}
                         />
                     );
                 }
@@ -28,6 +35,9 @@ export const SectionRenderer: React.VFC<Props> = (props) => {
                     <QuestionRenderer
                         question={child}
                         depth={props.depth + 1}
+                        onChange={props.onChange}
+                        answers={props.answers}
+                        reference={props.reference}
                     />
                 );
             })}

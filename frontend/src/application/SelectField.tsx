@@ -7,25 +7,44 @@ import {
     Select as MuiSelect,
     SelectProps,
 } from '@mui/material';
+import { MutableRefObject } from 'react';
 
 interface Props {
     question: ApplicationQuestion;
-    onChange?: () => void;
+    onChange?: (e:any ,id: string) => void;
+    reference?: MutableRefObject<[]> 
 }
 
-export const SelectField: React.VFC<Props> = ({ question, onChange }) => {
-    return (
-        <FormControl variant="standard" fullWidth>
-            <InputLabel>{question.displayText}</InputLabel>
-            <MuiSelect style={selectStyles}>
-                {question.options?.map((option) => (
-                    <MenuItem key={option} value={option}>
-                        <ListItemText primary={option} />
-                    </MenuItem>
-                ))}
-            </MuiSelect>
-        </FormControl>
-    );
+export const SelectField: React.VFC<Props> = ({ question, onChange, reference}) => {
+    if(onChange){
+        return (
+            <FormControl variant="standard" fullWidth>
+                <InputLabel>{question.displayText}</InputLabel>
+                <MuiSelect style={selectStyles} onChange={(e) => onChange(e,question.id)}>
+                    {question.options?.map((option) => (
+                        <MenuItem key={option} value={option}>
+                            <ListItemText primary={option} />
+                        </MenuItem>
+                    ))}
+                </MuiSelect>
+            </FormControl>
+        );
+    }
+    if(reference){
+        return (
+            <FormControl variant="standard" fullWidth>
+                <InputLabel>{question.displayText}</InputLabel>
+                <MuiSelect style={selectStyles} inputRef={ele => (reference.current[question.id] = ele)} onChange={(e) => onChange(e,question.id)}>
+                    {question.options?.map((option) => (
+                        <MenuItem key={option} value={option}>
+                            <ListItemText primary={option} />
+                        </MenuItem>
+                    ))}
+                </MuiSelect>
+            </FormControl>
+        );
+    }
+    return <></>
 };
 
 const selectStyles: SelectProps['style'] = {

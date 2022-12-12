@@ -27,11 +27,7 @@ export default function App() {
             <CssBaseline />
             <Box id="layout-root" style={rootStyles}>
                 <Sidebar style={sidebarStyles} />
-                <MainContent
-                    key={selectedAppId}
-                    style={mainContentStyles}
-                    application={selectedApp}
-                />
+                <MainContent key={selectedAppId} />
             </Box>
         </ThemeProvider>
     );
@@ -44,13 +40,6 @@ const sidebarStyles: BoxProps['style'] = {
     height: '100%',
     padding: '40px',
     maxWidth: SIDEBAR_WIDTH,
-};
-
-const mainContentStyles: BoxProps['style'] = {
-    height: '100%',
-    padding: '40px',
-    overflowY: 'auto',
-    flexGrow: 1
 };
 
 const rootStyles: BoxProps['style'] = {
