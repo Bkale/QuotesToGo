@@ -6,9 +6,14 @@ import React from 'react';
 import axios from 'axios';
 import { createTheme } from './theme';
 
+//REDUX
+import { useAppSelector } from './redux/reduxHooks';
+import { RootState } from './redux/store';
+
 export default function App() {
+    const {selectedAppId} = useAppSelector((state: RootState) => state.applications);
+
     const [applications, setApplications] = React.useState<Application[]>([]);
-    const [selectedAppId, setSelectedAppId] = React.useState<string>();
     const selectedApp = applications.find((app) => app.id === selectedAppId);
 
     React.useEffect(() => {
@@ -21,16 +26,7 @@ export default function App() {
         <ThemeProvider theme={createTheme()}>
             <CssBaseline />
             <Box id="layout-root" style={rootStyles}>
-                <Sidebar
-                    onCreate={(app) => {
-                        setApplications((existing) => [...existing, app]);
-                        setSelectedAppId(app.id);
-                    }}
-                    onSelect={(id) => setSelectedAppId(id)}
-                    selectedAppId={selectedAppId}
-                    style={sidebarStyles}
-                    applications={applications}
-                />
+                <Sidebar style={sidebarStyles} />
                 <MainContent
                     key={selectedAppId}
                     style={mainContentStyles}
