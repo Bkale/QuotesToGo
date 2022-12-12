@@ -1,7 +1,6 @@
 import { Box, BoxProps, CssBaseline, ThemeProvider } from '@mui/material';
-import { Application } from '../../shared-types';
-import { MainContent } from './MainContent';
-import { Sidebar } from './Sidebar';
+import { MainContent } from './layout/MainContent';
+import { Sidebar } from './layout/Sidebar';
 import React from 'react';
 import axios from 'axios';
 import { createTheme } from './theme';

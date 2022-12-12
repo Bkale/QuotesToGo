@@ -5,7 +5,8 @@ import { TextField as MuiTextField, TextFieldProps } from '@mui/material';
 interface Props {
     question: ApplicationNode | ApplicationQuestion ;
     onChange?: (e:any ,id: string) => void;
-    reference?: MutableRefObject<[]> 
+    // reference?: MutableRefObject<[]> 
+    reference?: MutableRefObject<(HTMLDivElement | null)[]> 
 }
 
 export const TextField: React.VFC<Props> = ({ question, onChange, reference }) => {
@@ -29,7 +30,7 @@ export const TextField: React.VFC<Props> = ({ question, onChange, reference }) =
                 variant="standard"
                 style={textStyles}
                 required={(question as ApplicationQuestion).required}
-                inputRef={ele => (reference.current[question.id] = ele)}
+                inputRef={ele => (reference.current[(question as ApplicationQuestion).id as unknown as number] = ele)}
             />
         );
     }

@@ -1,17 +1,19 @@
 import { useRef, useState } from 'react';
 import axios from 'axios';
 import { Box, BoxProps, Typography } from '@mui/material';
-import { ApplicationSection } from '../../shared-types';
-import { SectionRenderer } from './application/SectionRenderer';
+import { ApplicationSection } from '../../../shared-types';
+import { SectionRenderer } from '../containers/SectionRenderer';
 //Redux
-import { RootState } from './redux/rootReducer';
-import { useAppSelector } from './redux/reduxHooks';
+import { RootState } from 'src/redux/rootReducer';
+import { useAppDispatch, useAppSelector } from 'src/redux/reduxHooks';
+import {setApplications} from 'src/redux/applications/applications.action';
 
 export const MainContent = () => {
     const { selectedAppId, applications } = useAppSelector((state: RootState) => state.applications);
     let selectedApp = applications.find((app: { id: string; carriers: any[]; }) => app.id === selectedAppId);
     const [answers, setAnswers] = useState<{[key: string]: string}>({});
-    const mainRef = useRef([]);
+    const mainRef = useRef<(HTMLDivElement | null )[]>([])
+    const dispatch = useAppDispatch()
 
     const handleChange = (event: { target: {
         [x: string]: any; value: any; 
@@ -32,18 +34,28 @@ export const MainContent = () => {
 
     const handleSubmit = () => {
         const {answerLookup} = selectedApp;
-        
+            console.log("here");
+            
         for(let answer in answerLookup){
            // Populate answerlookup
            if(answer in answers) {
             if(answerLookup[answer].isRequired && (answers[answer] === undefined )) return; // VALIDATE ISREQUIRED
             answerLookup[answer].value = answers[answer];
            } else {
-            if(mainRef.current[answer] === null || mainRef.current[answer].value === undefined) return; 
-            if(mainRef.current[answer].value.length === 0) return; // VALIDATE ISREQUIRED
-            answerLookup[answer].value = mainRef.current[answer].value;
+            if(mainRef.current[answer as unknown as number] === null){                 
+                return
+            } else {
+                if(mainRef.current[answer as unknown as number].value === undefined || mainRef.current[answer].value.length === 0 ) return;
+                answerLookup[answer].value = mainRef.current[answer].value;
+            }
            }
         }
+        
+        axios
+        .post('/api/applications/submit', selectedApp)
+        .then(({ data }) => {
+            setApplications(data, dispatch)
+        })
         
     }
 

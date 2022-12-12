@@ -16,13 +16,16 @@ const OPTIONS = [
 interface Props {
     question: ApplicationQuestion;
     onChange?: (e:any ,id: string) => void;
-    reference?: MutableRefObject<[]> 
+    // reference?: MutableRefObject<[]> 
+    reference?: MutableRefObject<(HTMLDivElement | null)[]> 
 }
 
 export const RadioBooleanField: React.VFC<Props> = ({question, onChange, reference}) => {
 
     const handleChange = (event: { target: { value: any; }; }) => {
-        reference.current[question.id] = event.target.value;
+        if(reference){
+            reference.current[question.id as unknown as number] = event.target.value;
+        }
     }
 
     if(onChange){

@@ -1,10 +1,10 @@
 import { MutableRefObject } from 'react';
 import { BoxProps, Box } from '@mui/material';
 import { ApplicationNode, ApplicationQuestion, ApplicationSection } from '../../../shared-types';
-import { RadioBooleanField } from './RadioBooleanField';
+import { RadioBooleanField } from '../components/RadioBooleanField';
 import { SectionRenderer } from './SectionRenderer';
-import { SelectField } from './SelectField';
-import { TextField } from './TextField';
+import { SelectField } from 'src/components/SelectField'
+import { TextField } from 'src/components/TextField'
 // REDUX
 import { useAppSelector } from "src/redux/reduxHooks";
 import {RootState} from 'src/redux/store';
@@ -14,7 +14,8 @@ interface Props {
     depth: number;
     onChange: (event: { target: { value: any; }; }, questionId: string) => void;
     answers: {[key: string]: string}
-    reference?: MutableRefObject<[]> 
+    // reference?: MutableRefObject<[]> 
+    reference?: MutableRefObject<(HTMLDivElement | null)[]> 
 }
 
 export const QuestionRenderer: React.VFC<Props> = (props) => {

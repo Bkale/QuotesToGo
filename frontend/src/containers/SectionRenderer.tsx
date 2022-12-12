@@ -8,7 +8,9 @@ interface Props {
     depth: number;
     onChange: (event: { target: { value: any; }; }, questionId: string) => void;
     answers: {[key: string]: string}
-    reference?: MutableRefObject<[]> 
+    reference?: MutableRefObject<(HTMLDivElement | null)[]> 
+    // reference?: MutableRefObject<[]> 
+
 }
 
 export const SectionRenderer: React.VFC<Props> = (props) => {

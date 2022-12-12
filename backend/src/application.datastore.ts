@@ -31,11 +31,10 @@ export class ApplicationDataStore {
         return newApp;
     }
 
-    public save(args: Application): Application | null{
+    public submit(args: Application): Application | null{
         let {id} = args;
 
         this.data.set(id, args);
-        console.log("SAVED: ",this.data.get(id))
         return this.data.get(id) ?? null;
     }
     
