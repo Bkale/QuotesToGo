@@ -4,15 +4,19 @@ import { Application } from '../../shared-types';
 import axios from 'axios';
 import { CarriersModal } from './CarriersModal';
 
+// Redux
+import { useAppSelector } from './redux/reduxHooks';
+import { RootState } from './redux/store';
+import { useAppDispatch } from "src/redux/reduxHooks";
+import {addApplication, updateSelectedApp} from './redux/applications/applications.action';
+
 interface Props {
-    onCreate: (application: Application) => void;
-    onSelect: (id: string) => void;
-    applications: Application[];
-    selectedAppId?: string;
     style?: BoxProps['style'];
 }
 
-export const Sidebar: React.VFC<Props> = ({ onCreate, onSelect, applications, selectedAppId, style }) => {
+export const Sidebar: React.VFC<Props> = ({style }) => {
+    const dispatch = useAppDispatch();
+    const {selectedAppId, applications} = useAppSelector((state: RootState) => state.applications);
     const [open, setOpen] = React.useState(false);
 
     const handleClose = () => {
@@ -22,7 +26,12 @@ export const Sidebar: React.VFC<Props> = ({ onCreate, onSelect, applications, se
     const handleCreate = (carriers: string[]) => {
         axios
             .post('/api/applications/new', { carriers })
-            .then(({ data }) => onCreate(data))
+            .then(({ data }) => {
+                console.log(data);
+                
+                addApplication(data, dispatch);
+                updateSelectedApp(data.id, dispatch);
+            })
             .finally(handleClose);
     };
 
@@ -36,10 +45,10 @@ export const Sidebar: React.VFC<Props> = ({ onCreate, onSelect, applications, se
                 >
                     Start New Application
                 </Button>
-                {applications.map((app) => (
+                {applications.map((app: Application) => (
                     <Button
                         color="secondary"
-                        onClick={() => onSelect(app.id)}
+                        onClick={() => updateSelectedApp(app.id, dispatch)}
                         style={{
                             backgroundColor:
                                 app.id === selectedAppId ? 'gray' : undefined,
