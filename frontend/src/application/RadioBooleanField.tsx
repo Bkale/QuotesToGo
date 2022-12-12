@@ -1,5 +1,6 @@
 import { ApplicationQuestion } from '../../../shared-types';
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
+import { MutableRefObject } from 'react';
 
 const OPTIONS = [
     {
@@ -14,29 +15,63 @@ const OPTIONS = [
 
 interface Props {
     question: ApplicationQuestion;
-    onChange?: () => void;
+    onChange?: (e:any ,id: string) => void;
+    reference?: MutableRefObject<[]> 
 }
 
-export const RadioBooleanField: React.VFC<Props> = ({question, onChange}) => {
-    return (
-        <FormControl component="fieldset">
-            <FormLabel className="question">{question.displayText}</FormLabel>
-            <RadioGroup id={question.id} row>
-                {OPTIONS.map((option) => (
+export const RadioBooleanField: React.VFC<Props> = ({question, onChange, reference}) => {
+
+    const handleChange = (event: { target: { value: any; }; }) => {
+        reference.current[question.id] = event.target.value;
+    }
+
+    if(onChange){
+        return (
+            <FormControl component="fieldset">
+                <FormLabel className="question">{question.displayText}</FormLabel>
+                <RadioGroup id={question.id} row onChange={(e) => onChange(e,question.id)}>
+                    {OPTIONS.map((option) => (
+                        <FormControlLabel
+                            key={option.label}
+                            value={option.value}
+                            control={<Radio />}
+                            label={option.label}
+                            
+                        />
+                    ))}
                     <FormControlLabel
-                        key={option.label}
-                        value={option.value}
+                        sx={{ visibility: 'hidden' }}
+                        value="null"
                         control={<Radio />}
-                        label={option.label}
+                        label="No"
                     />
-                ))}
-                <FormControlLabel
-                    sx={{ visibility: 'hidden' }}
-                    value="null"
-                    control={<Radio />}
-                    label="No"
-                />
-            </RadioGroup>
-        </FormControl>
-    );
+                </RadioGroup>
+            </FormControl>
+        );
+    }
+    if(reference){
+        return (
+            <FormControl component="fieldset">
+                <FormLabel className="question">{question.displayText}</FormLabel>
+                <RadioGroup id={question.id} row onChange={handleChange}>
+                    {OPTIONS.map((option) => (
+                        <FormControlLabel
+                            key={option.label}
+                            value={option.value}
+                            control={<Radio />}
+                            label={option.label}
+                            
+                        />
+                    ))}
+                    <FormControlLabel
+                        sx={{ visibility: 'hidden' }}
+                        value="null"
+                        control={<Radio />}
+                        label="No"
+                    />
+                </RadioGroup>
+            </FormControl>
+        );
+    }
+    return <></>
 };
