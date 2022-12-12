@@ -13,6 +13,8 @@ export interface Application {
     carriers: string[];
 
     content: ApplicationSection[];
+
+    answerLookup: {[key: string]: string}
 }
 
 /* 
