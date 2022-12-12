@@ -50,7 +50,7 @@ const filterSubSections = (subSecs: any[], curatedQuestions: {[key: string] : Ca
 export const curatedApplication = (arg:ApplicationCreateArgs) => {
   const carriersArr = arg.carriers;
   let curatedQuestions: {[key: string] : CarrierQuestionsArgs} = {}
-  let appAnswerLookup:{[key: string]: {}} = {}
+  let appAnswerLookup:{[key: string]: string} = {}
 
   carriersArr.map(carrier => {
     switch (carrier) {

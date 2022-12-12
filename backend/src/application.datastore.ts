@@ -20,6 +20,7 @@ export class ApplicationDataStore {
 
     public create(args: ApplicationCreateArgs): Application {
         const {curatedApp, appAnswerLookup} = curatedApplication(args)
+        
         const newApp = {
             id: uuid(),
             carriers: args.carriers,
@@ -30,6 +31,14 @@ export class ApplicationDataStore {
         return newApp;
     }
 
+    public save(args: Application): Application | null{
+        let {id} = args;
+
+        this.data.set(id, args);
+        console.log("SAVED: ",this.data.get(id))
+        return this.data.get(id) ?? null;
+    }
+    
     public getById(id: string): Application | null {
         return this.data.get(id) ?? null;
     }

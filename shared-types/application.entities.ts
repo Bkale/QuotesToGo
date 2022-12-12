@@ -52,6 +52,8 @@ export interface ApplicationQuestion {
 
     // An array of ApplicationConditions is considered to be an AND filter
     conditions?: ApplicationCondition[];
+
+    required: boolean;
 }
 
 // Union type of Section and Question
